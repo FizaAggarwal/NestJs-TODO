@@ -11,6 +11,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { TasksService } from './tasks/tasks.service';
 import { LoggerMiddleware } from './middleware';
+import { Task } from './tasks/tasks.model';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { LoggerMiddleware } from './middleware';
       username: 'postgres',
       password: 'postgres',
       database: 'nest_todo',
-      models: [],
+      models: [Task],
     }),
     TasksModule,
   ],
@@ -32,6 +33,6 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(LoggerMiddleware)
-      .forRoutes({ path: 'cats', method: RequestMethod.GET });
+      .forRoutes({ path: 'tasks', method: RequestMethod.GET });
   }
 }

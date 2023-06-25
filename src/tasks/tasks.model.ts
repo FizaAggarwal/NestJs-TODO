@@ -1,8 +1,9 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, Model, PrimaryKey, Table } from 'sequelize-typescript';
 
-@Table
+@Table({ timestamps: false })
 export class Task extends Model {
-  @Column
+  @PrimaryKey
+  @Column({ autoIncrement: true })
   id: number;
 
   @Column

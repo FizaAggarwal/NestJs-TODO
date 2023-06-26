@@ -1,4 +1,11 @@
-import { Column, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import {
+  BelongsTo,
+  Column,
+  Model,
+  PrimaryKey,
+  Table,
+} from 'sequelize-typescript';
+import { User } from 'src/users/users.model';
 
 @Table({ timestamps: false })
 export class Task extends Model {
@@ -11,4 +18,8 @@ export class Task extends Model {
 
   @Column({ defaultValue: false })
   isCompleted: boolean;
+
+  // Define association with User model
+  @BelongsTo(() => User, { foreignKey: 'userId' })
+  user: User;
 }

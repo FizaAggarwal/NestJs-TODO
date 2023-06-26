@@ -10,6 +10,8 @@ import { TasksModule } from './tasks/tasks.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { LoggerMiddleware } from './middleware';
 import { Task } from './tasks/tasks.model';
+import { User } from './users/users.model';
+import { SignUpModule } from './signUp/signUp.module';
 
 @Module({
   imports: [
@@ -20,9 +22,10 @@ import { Task } from './tasks/tasks.model';
       username: 'postgres',
       password: 'postgres',
       database: 'nest_todo',
-      models: [Task],
+      models: [Task, User],
     }),
     TasksModule,
+    SignUpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

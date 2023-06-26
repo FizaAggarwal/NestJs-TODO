@@ -12,6 +12,7 @@ import { LoggerMiddleware } from './middleware';
 import { Task } from './tasks/tasks.model';
 import { User } from './users/users.model';
 import { SignUpModule } from './signUp/signUp.module';
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { SignUpModule } from './signUp/signUp.module';
     }),
     TasksModule,
     SignUpModule,
+    LoginModule,
   ],
   controllers: [AppController],
   providers: [AppService],

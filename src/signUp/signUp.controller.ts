@@ -7,7 +7,7 @@ export class SignUpController {
   constructor(private signUpService: SignUpService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
+  async signUp(@Body() createUserDto: CreateUserDto) {
     return this.signUpService.create(createUserDto);
   }
 }

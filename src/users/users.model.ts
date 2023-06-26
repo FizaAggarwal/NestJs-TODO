@@ -17,6 +17,9 @@ export class User extends Model {
   name: string;
 
   @Column
+  hashedPassword: string;
+
+  @Column
   description: string;
 
   // Define association with Task model

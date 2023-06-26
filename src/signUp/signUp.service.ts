@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/users/users.model';
 import { CreateUserDto } from './dto/create-user.dto';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class SignUpService {
@@ -14,6 +15,7 @@ export class SignUpService {
     const newUser = await User.create({
       name: createUserDto.name,
       description: createUserDto.description,
+      hashedPassword: await hash(createUserDto.password, 10),
     });
 
     return newUser;

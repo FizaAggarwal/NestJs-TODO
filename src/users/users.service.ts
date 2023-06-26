@@ -9,10 +9,10 @@ export class UsersService {
     private userModel: typeof User,
   ) {}
 
-  async findOne(userId: string) {
+  async findOne(id: string) {
     const user = await this.userModel.findOne({
       where: {
-        userId: userId,
+        id: id,
       },
     });
     return user;

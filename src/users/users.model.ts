@@ -11,7 +11,7 @@ import { Task } from 'src/tasks/tasks.model';
 export class User extends Model {
   @PrimaryKey
   @Column({ autoIncrement: true })
-  userId: number;
+  id: number;
 
   @Column
   name: string;

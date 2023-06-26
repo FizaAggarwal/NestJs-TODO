@@ -18,7 +18,7 @@ export class LoginController {
     if (!(await compare(password, user.hashedPassword))) {
       throw new UnauthorizedException();
     }
-    const payload = { userId: user.userId, name: user.name };
+    const payload = { id: user.id, name: user.name };
     return {
       access_token: await this.jwtService.signAsync(payload, {
         secret: jwtConstants.secret,

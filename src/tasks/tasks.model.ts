@@ -19,7 +19,10 @@ export class Task extends Model {
   @Column({ defaultValue: false })
   isCompleted: boolean;
 
+  @Column
+  userId: string;
+
   // Define association with User model
-  @BelongsTo(() => User, { foreignKey: 'userId' })
+  @BelongsTo(() => User, { foreignKey: 'id' })
   user: User;
 }

@@ -15,10 +15,11 @@ export class TasksService {
     return this.taskModel.findAll();
   }
 
-  async create(createTaskDto: CreateTaskDto) {
+  async create(createTaskDto: CreateTaskDto, id) {
     const newTask = await Task.create({
       title: createTaskDto.title,
       isCompleted: createTaskDto.isCompleted,
+      userId: id,
     });
 
     return newTask;

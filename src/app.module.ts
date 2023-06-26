@@ -8,12 +8,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { LoggerMiddleware } from './middleware';
 import { Task } from './tasks/tasks.model';
 import { User } from './users/users.model';
 import { SignUpModule } from './signUp/signUp.module';
 import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
+import { JwtService } from '@nestjs/jwt';
+import { AuthModule } from './auth/auth.module';
+import { AuthGuard } from './auth/auth.guard';
 
 @Module({
   imports: [
@@ -26,18 +28,14 @@ import { UsersModule } from './users/users.module';
       database: 'nest_todo',
       models: [Task, User],
     }),
+    SequelizeModule.forFeature([User]),
     TasksModule,
     SignUpModule,
     LoginModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtService],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware)
-      .forRoutes({ path: 'tasks', method: RequestMethod.GET });
-  }
-}
+export class AppModule {}

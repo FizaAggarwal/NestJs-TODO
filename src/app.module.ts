@@ -13,6 +13,7 @@ import { Task } from './tasks/tasks.model';
 import { User } from './users/users.model';
 import { SignUpModule } from './signUp/signUp.module';
 import { LoginModule } from './login/login.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { LoginModule } from './login/login.module';
     TasksModule,
     SignUpModule,
     LoginModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

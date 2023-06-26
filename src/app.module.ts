@@ -6,10 +6,8 @@ import {
 } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TasksController } from './tasks/tasks.controller';
 import { TasksModule } from './tasks/tasks.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { TasksService } from './tasks/tasks.service';
 import { LoggerMiddleware } from './middleware';
 import { Task } from './tasks/tasks.model';
 

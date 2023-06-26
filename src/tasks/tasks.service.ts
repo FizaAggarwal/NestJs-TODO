@@ -10,13 +10,12 @@ export class TasksService {
     @InjectModel(Task)
     private taskModel: typeof Task,
   ) {}
-  private readonly tasks: Task[] = [];
 
   async findAll() {
     return this.taskModel.findAll();
   }
 
-  async create(createTaskDto: CreateTaskDto): Promise<Task> {
+  async create(createTaskDto: CreateTaskDto) {
     const newTask = await Task.create({
       title: createTaskDto.title,
       isCompleted: createTaskDto.isCompleted,
@@ -36,16 +35,12 @@ export class TasksService {
     return updatedTask.save();
   }
 
-  findOne(id: string): Promise<Task> {
-    return this.taskModel.findOne({
+  async remove(id: string): Promise<void> {
+    const task = await this.taskModel.findOne({
       where: {
-        id,
+        id: id,
       },
     });
-  }
-
-  async remove(id: string): Promise<void> {
-    const task = await this.findOne(id);
     await task.destroy();
   }
 }

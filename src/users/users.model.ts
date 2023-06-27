@@ -17,6 +17,9 @@ export class User extends Model {
   name: string;
 
   @Column
+  email: string;
+
+  @Column
   hashedPassword: string;
 
   @Column

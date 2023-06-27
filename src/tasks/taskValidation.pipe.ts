@@ -1,6 +1,6 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { TaskSchema } from './schemas/taskSchema';
+import { TaskSchema } from './schema/taskSchema';
 
 export class TaskValidatorPipe implements PipeTransform<CreateTaskDto> {
   public transform(value: CreateTaskDto): CreateTaskDto {

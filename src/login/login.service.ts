@@ -9,10 +9,10 @@ export class LoginService {
     private userModel: typeof User,
   ) {}
 
-  async findOne(name: string) {
+  async findOne(email: string) {
     const user = await this.userModel.findOne({
       where: {
-        name: name,
+        email: email,
       },
     });
     return user;

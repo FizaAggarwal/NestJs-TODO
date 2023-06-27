@@ -1,8 +1,16 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UnauthorizedException,
+  UsePipes,
+} from '@nestjs/common';
 import { LoginService } from './login.service';
 import { hash, compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from 'src/constants/authConstants';
+import { LoginValidatorPipe } from './loginValidation.pipe';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('login')
 export class LoginController {
@@ -11,11 +19,12 @@ export class LoginController {
     private jwtService: JwtService,
   ) {}
 
+  @UsePipes(LoginValidatorPipe)
   @Post()
-  async login(@Body('name') name: string, @Body('password') password: string) {
-    const user = await this.loginService.findOne(name);
+  async login(@Body() loginUserDto: LoginUserDto) {
+    const user = await this.loginService.findOne(loginUserDto.email);
 
-    if (!(await compare(password, user.hashedPassword))) {
+    if (!(await compare(loginUserDto.password, user.hashedPassword))) {
       throw new UnauthorizedException();
     }
     const payload = { id: user.id, name: user.name };

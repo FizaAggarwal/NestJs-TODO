@@ -30,6 +30,11 @@ export class SignUpService {
       email: createUserDto.email,
     });
 
-    return newUser;
+    return {
+      id: newUser.id,
+      name: newUser.name,
+      desciption: newUser.description,
+      email: newUser.email,
+    };
   }
 }

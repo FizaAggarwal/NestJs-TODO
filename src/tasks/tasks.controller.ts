@@ -8,11 +8,13 @@ import {
   Put,
   UseGuards,
   Request,
+  UsePipes,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TasksService } from './tasks.service';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { TaskValidatorPipe } from './taskValidation.pipe';
 
 @Controller('tasks')
 export class TasksController {
@@ -25,6 +27,7 @@ export class TasksController {
   }
 
   @UseGuards(AuthGuard)
+  @UsePipes(TaskValidatorPipe)
   @Post()
   async create(@Body() createTaskDto: CreateTaskDto, @Request() req) {
     return this.tasksService.create(createTaskDto, req.user.id);

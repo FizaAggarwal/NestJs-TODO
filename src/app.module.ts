@@ -10,17 +10,20 @@ import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { JwtService } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
-import { AuthGuard } from './auth/auth.guard';
+import { Dialect } from 'sequelize';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Module({
   imports: [
     SequelizeModule.forRoot({
-      dialect: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'nest_todo',
+      dialect: process.env.DB_DIALECT as Dialect,
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE_NAME,
       models: [Task, User],
     }),
     SequelizeModule.forFeature([User]),

@@ -33,11 +33,6 @@ export class TasksController {
     return this.tasksService.create(createTaskDto, req.user.id);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string): string {
-  //   return `This action returns a #${id} task`;
-  // }
-
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
     return this.tasksService.update(id, updateTaskDto);

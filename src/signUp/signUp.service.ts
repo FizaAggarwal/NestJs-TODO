@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/users/users.model';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -23,6 +23,7 @@ export class SignUpService {
         description: 'Bad request',
       });
     }
+    try{
     const newUser = await User.create({
       name: createUserDto.name,
       description: createUserDto.description,
@@ -36,5 +37,17 @@ export class SignUpService {
       desciption: newUser.description,
       email: newUser.email,
     };
+  }catch(error){
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: 'There was a problem creating user.',
+      },
+      HttpStatus.FORBIDDEN,
+      {
+        cause: error,
+      },
+    );
   }
+}
 }

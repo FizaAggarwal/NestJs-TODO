@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Task } from './tasks.model';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -12,10 +12,24 @@ export class TasksService {
   ) {}
 
   async findAll() {
-    return this.taskModel.findAll();
+    try{
+    return this.taskModel.findAll();}
+    catch(error){
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'Could not get all tasks.',
+        },
+        HttpStatus.FORBIDDEN,
+        {
+          cause: error,
+        },
+      );
+    }
   }
 
   async create(createTaskDto: CreateTaskDto, id) {
+    try{
     const newTask = await Task.create({
       title: createTaskDto.title,
       isCompleted: createTaskDto.isCompleted,
@@ -23,9 +37,22 @@ export class TasksService {
     });
 
     return newTask;
+  } catch(error){
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: 'There was a problem creating new task.',
+      },
+      HttpStatus.FORBIDDEN,
+      {
+        cause: error,
+      },
+    );
+  }
   }
 
   async update(id: string, updateTaskDto: UpdateTaskDto) {
+    try{
     const task = await this.taskModel.findOne({
       where: {
         id: id,
@@ -34,14 +61,39 @@ export class TasksService {
 
     const updatedTask = Object.assign(task, updateTaskDto);
     return updatedTask.save();
+  }catch(error){
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: 'There was a problem updating the task.',
+      },
+      HttpStatus.FORBIDDEN,
+      {
+        cause: error,
+      },
+    );
+  }
   }
 
   async remove(id: string): Promise<void> {
+    try{
     const task = await this.taskModel.findOne({
       where: {
         id: id,
       },
     });
     await task.destroy();
+  }catch(error){
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: 'There was a problem deleting the task.',
+      },
+      HttpStatus.FORBIDDEN,
+      {
+        cause: error,
+      },
+    );
   }
+}
 }

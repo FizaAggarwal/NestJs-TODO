@@ -12,9 +12,9 @@ export class TasksService {
   ) {}
 
   async findAll() {
-    try{
-    return this.taskModel.findAll();}
-    catch(error){
+    try {
+      return this.taskModel.findAll();
+    } catch (error) {
       throw new HttpException(
         {
           status: HttpStatus.FORBIDDEN,
@@ -28,72 +28,73 @@ export class TasksService {
     }
   }
 
-  async create(createTaskDto: CreateTaskDto, id) {
-    try{
-    const newTask = await Task.create({
-      title: createTaskDto.title,
-      isCompleted: createTaskDto.isCompleted,
-      userId: id,
-    });
+  async create(createTaskDto: CreateTaskDto, id: string) {
+    try {
+      const newTask = await Task.create({
+        title: createTaskDto.title,
+        isCompleted: createTaskDto.isCompleted,
+        userId: id,
+      });
 
-    return newTask;
-  } catch(error){
-    throw new HttpException(
-      {
-        status: HttpStatus.FORBIDDEN,
-        error: 'There was a problem creating new task.',
-      },
-      HttpStatus.FORBIDDEN,
-      {
-        cause: error,
-      },
-    );
-  }
+      return newTask;
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'There was a problem creating new task.',
+        },
+        HttpStatus.FORBIDDEN,
+        {
+          cause: error,
+        },
+      );
+    }
   }
 
   async update(id: string, updateTaskDto: UpdateTaskDto) {
-    try{
-    const task = await this.taskModel.findOne({
-      where: {
-        id: id,
-      },
-    });
+    try {
+      const task = await this.taskModel.findOne({
+        where: {
+          id: id,
+        },
+      });
 
-    const updatedTask = Object.assign(task, updateTaskDto);
-    return updatedTask.save();
-  }catch(error){
-    throw new HttpException(
-      {
-        status: HttpStatus.FORBIDDEN,
-        error: 'There was a problem updating the task.',
-      },
-      HttpStatus.FORBIDDEN,
-      {
-        cause: error,
-      },
-    );
-  }
+      const updatedTask = Object.assign(task, updateTaskDto);
+      
+      return updatedTask.save();
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'There was a problem updating the task.',
+        },
+        HttpStatus.FORBIDDEN,
+        {
+          cause: error,
+        },
+      );
+    }
   }
 
   async remove(id: string): Promise<void> {
-    try{
-    const task = await this.taskModel.findOne({
-      where: {
-        id: id,
-      },
-    });
-    await task.destroy();
-  }catch(error){
-    throw new HttpException(
-      {
-        status: HttpStatus.FORBIDDEN,
-        error: 'There was a problem deleting the task.',
-      },
-      HttpStatus.FORBIDDEN,
-      {
-        cause: error,
-      },
-    );
+    try {
+      const task = await this.taskModel.findOne({
+        where: {
+          id: id,
+        },
+      });
+      await task.destroy();
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'There was a problem deleting the task.',
+        },
+        HttpStatus.FORBIDDEN,
+        {
+          cause: error,
+        },
+      );
+    }
   }
-}
 }

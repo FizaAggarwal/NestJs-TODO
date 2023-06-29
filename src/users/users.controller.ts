@@ -25,6 +25,7 @@ export class UsersController {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });
+      
       return await this.userService.findOne(payload.id);
     } catch {
       throw new UnauthorizedException();

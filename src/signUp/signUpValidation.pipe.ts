@@ -9,6 +9,7 @@ export class UserValidatorPipe implements PipeTransform<CreateUserDto> {
       const errorMessages = result.error.details.map((d) => d.message).join();
       throw new BadRequestException(errorMessages);
     }
+    
     return value;
   }
 }

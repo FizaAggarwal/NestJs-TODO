@@ -28,6 +28,7 @@ export class LoginController {
       throw new UnauthorizedException();
     }
     const payload = { id: user.id, name: user.name };
+
     return {
       access_token: await this.jwtService.signAsync(payload, {
         secret: jwtConstants.secret,

@@ -9,6 +9,7 @@ export class TaskValidatorPipe implements PipeTransform<CreateTaskDto> {
       const errorMessages = result.error.details.map((d) => d.message).join();
       throw new BadRequestException(errorMessages);
     }
+    
     return value;
   }
 }

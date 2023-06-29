@@ -15,6 +15,7 @@ export class UsersService {
         id: id,
       },
     });
+    
     return {
       id: user.id,
       name: user.name,

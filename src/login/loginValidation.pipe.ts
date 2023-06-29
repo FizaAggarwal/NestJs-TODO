@@ -9,6 +9,7 @@ export class LoginValidatorPipe implements PipeTransform<LoginUserDto> {
       const errorMessages = result.error.details.map((d) => d.message).join();
       throw new BadRequestException(errorMessages);
     }
+
     return value;
   }
 }

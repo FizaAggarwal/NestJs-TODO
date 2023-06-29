@@ -16,6 +16,7 @@ export class LoginService {
         email: email,
       },
     });
+    
     return user;
   }catch(error){
     throw new HttpException(

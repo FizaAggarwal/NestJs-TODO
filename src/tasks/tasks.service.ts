@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Task } from './tasks.model';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -15,16 +20,7 @@ export class TasksService {
     try {
       return this.taskModel.findAll();
     } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: 'Could not get all tasks.',
-        },
-        HttpStatus.FORBIDDEN,
-        {
-          cause: error,
-        },
-      );
+      throw new NotFoundException();
     }
   }
 
@@ -40,10 +36,10 @@ export class TasksService {
     } catch (error) {
       throw new HttpException(
         {
-          status: HttpStatus.FORBIDDEN,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
           error: 'There was a problem creating new task.',
         },
-        HttpStatus.FORBIDDEN,
+        HttpStatus.INTERNAL_SERVER_ERROR,
         {
           cause: error,
         },
@@ -60,15 +56,15 @@ export class TasksService {
       });
 
       const updatedTask = Object.assign(task, updateTaskDto);
-      
+
       return updatedTask.save();
     } catch (error) {
       throw new HttpException(
         {
-          status: HttpStatus.FORBIDDEN,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
           error: 'There was a problem updating the task.',
         },
-        HttpStatus.FORBIDDEN,
+        HttpStatus.INTERNAL_SERVER_ERROR,
         {
           cause: error,
         },
@@ -87,10 +83,10 @@ export class TasksService {
     } catch (error) {
       throw new HttpException(
         {
-          status: HttpStatus.FORBIDDEN,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
           error: 'There was a problem deleting the task.',
         },
-        HttpStatus.FORBIDDEN,
+        HttpStatus.INTERNAL_SERVER_ERROR,
         {
           cause: error,
         },

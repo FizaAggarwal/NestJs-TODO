@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/users/users.model';
 
@@ -10,17 +10,21 @@ export class UsersService {
   ) {}
 
   async findOne(id: string) {
-    const user = await this.userModel.findOne({
-      where: {
-        id: id,
-      },
-    });
-    
-    return {
-      id: user.id,
-      name: user.name,
-      desciption: user.description,
-      email: user.email,
-    };
+    try {
+      const user = await this.userModel.findOne({
+        where: {
+          id: id,
+        },
+      });
+
+      return {
+        id: user.id,
+        name: user.name,
+        desciption: user.description,
+        email: user.email,
+      };
+    } catch (error) {
+      throw new NotFoundException();
+    }
   }
 }

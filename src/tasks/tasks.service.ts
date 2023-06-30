@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Task } from './tasks.model';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -20,7 +15,7 @@ export class TasksService {
     try {
       return this.taskModel.findAll();
     } catch (error) {
-      throw new NotFoundException();
+      throw new Error(error);
     }
   }
 
@@ -34,16 +29,7 @@ export class TasksService {
 
       return newTask;
     } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'There was a problem creating new task.',
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        {
-          cause: error,
-        },
-      );
+      throw new Error(error);
     }
   }
 
@@ -59,16 +45,7 @@ export class TasksService {
 
       return updatedTask.save();
     } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'There was a problem updating the task.',
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        {
-          cause: error,
-        },
-      );
+      throw new Error(error);
     }
   }
 
@@ -81,16 +58,7 @@ export class TasksService {
       });
       await task.destroy();
     } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'There was a problem deleting the task.',
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        {
-          cause: error,
-        },
-      );
+      throw new Error(error);
     }
   }
 }

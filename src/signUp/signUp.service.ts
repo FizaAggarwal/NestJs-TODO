@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/users/users.model';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -30,10 +24,7 @@ export class SignUpService {
           description: 'Bad request',
         });
       }
-    } catch (error) {
-      throw new NotFoundException();
-    }
-    try {
+
       const newUser = await User.create({
         name: createUserDto.name,
         description: createUserDto.description,
@@ -48,16 +39,7 @@ export class SignUpService {
         email: newUser.email,
       };
     } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'There was a problem creating user.',
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        {
-          cause: error,
-        },
-      );
+      throw new Error(error);
     }
   }
 }

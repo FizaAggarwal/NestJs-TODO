@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/users/users.model';
 
@@ -19,7 +19,7 @@ export class LoginService {
 
       return user;
     } catch (error) {
-      throw new NotFoundException();
+      throw new Error(error);
     }
   }
 }

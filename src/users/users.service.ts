@@ -20,7 +20,7 @@ export class UsersService {
       return {
         id: user.id,
         name: user.name,
-        desciption: user.description,
+        description: user.description,
         email: user.email,
       };
     } catch (error) {
